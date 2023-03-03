@@ -1,0 +1,55 @@
+1.Cài đặt thư viện cấu trúc:
+npm i redux
+npm i react-redux
+npm i styled-component
+npm i axios
+npm i react-router-dom
+npm i antd
+npm i fromik
+npm i yup
+npm i tailwindcss
+npm i bootstrap@4.6.0
+npm i redux-saga
+npm i redux-thunk
+npm i moment
+npm i sass-loader
+npm i node-sass
+npm i history@4.10.0
+npm install --save @tinymce/tinymce-react
+npm i html-react-parser
+npm install --save @ant-design/icons
+npm install react-beautiful-dnd --save
+npm i react-highlight-words
+...
+
+Luồng đi tạo project (video số 37):
+1/ Vô components để dispatch lên saga: pages -> Cyberbugs -> CreateProject -> CreateProject.js
+2/ Xây dựng action của Saga để theo dõi dispatch và tiến hành chạy services API: sagas -> Cyberbugs -> ProjectSaga.js
+3/ Gửi thông tin người dùng nhập vào xuống backend thông qua API của saga: vào services -> CyberbugsServices.js
+Gắn tiếp file này vào rootsaga
+(Ghi chú: lỗi 401 là lỗi không hợp lệ)
+
+Luồng đi tạo component quản lý project (video 39)
+1/ tạo trong thư mục pages:  pages ->  ProjectManagement -> ProjectManagement.js
+2/ Thêm component vào App
+3/ thiết kế 1 cái link cho nó trong giao diện: src -> components -> Cyberbugs -> MenuCyberbugs
+4/ vào antd copy component table bỏ vào ProjectManagement.js để test thử giao diện
+5/ tạo reducer: ProjectCyberBugsReducer (có projectList), sau đó import nó vào rootreducer là file: sagas -> configStore.js
+6/ vào ProjectManagement.js, dùng useSelector để lấy projectList về để render lại component
+7/ vào sagas -> Cyberbugs -> ProjectSaga.js (nhớ gắn file này vào rootSaga): 
+    - tạo theoDoiGetListProjectSaga để lắng nghe action saga khi component dispatch action lên
+    - tạo getListProjectSaga để call API và dispatch action thường lên lưu trên reducer
+8/ vào lại ProjectCyberBugsReducer để gắn switch case "GET_LIST_PROJECT"
+
+Luồng đi tạo Modal của trang Project Management
+1/ Tạo HOC: src -> HOC -> CyberbugsHOC -> DrawerCyberBugs.js
+2/ Vào antd, tìm "drawer" , chọn "New account", copy bỏ vào DrawerCyberBugs.js
+3/ lưu các sự kiện onlick, state...của drawer lên reducer để các component khác dùng useSelector về xài: src -> redux -> reducers -> DrawerCyberbugs.js
+(muốn nó chạy thì gắn nó vô configStore)
+4/ Vào component DrawerCyberBugs, dùng useSelector để lấy biến visible từ state về, và muốn thay đổi biến này thì dùng hàm useDispatch. Biến visible = true thì modal mở lên, = false thì đóng lại
+-Lấy thêm ComponentContentDrawer về để show lên modal
+5/ Vào trang page -> ProjectManagement -> ProjectManagement.js để gắn sự kiện mở modal vào nút Edit của trang
+6/ tạo file Form -> FormEditProject -> FormEditProject.js để gắn vô file ProjectManagement.js cho nó dispatch lên reducer cái type: "SET_SUBMIT_EDIT_PROJECT"
+Lúc này Submit nằm ở component DrawerCyberBugs, nhưng form nằm ở component FormEditProject
+.....hết hiểu
+7/ ở file ProjectManagement, nút Edit, ta dispath(actionEditProject) chưa thông tin của record dự án lên ProjectReducer.js, sau đó FormEditProject lấy về hiển thị ra
