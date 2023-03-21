@@ -8,7 +8,7 @@ const { Header, Sider, Content } = Layout;
 export default function SidebarCyberbugs() {
   const dispatch = useDispatch();
   const [state, setState] = useState({
-    collapsed: true,
+    collapsed: false,
   });
 
   const toggle = () => {
